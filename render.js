@@ -9,7 +9,7 @@ const fontMap = {
 };
 
 function preload() {
-    loadStyle("assets/styles/default/", s => {
+    loadStyle("assets/cards/styles/default/", s => {
         style = s;
         style.minion.portrait.image.assets.default = leeroy;
     });
@@ -19,26 +19,16 @@ function preload() {
 }
 
 function setup() {
-    canvas = createCanvas(670, 1000).canvas;
-    name = createText("Name", "text", "Leeroy Jenkins");
-    cost = createText("Cost", "number");
-    attack = createText("Attack", "number");
-    health = createText("Health", "number");
-    effect = createText("Effect", "text");
-    frameRate(10);
-}
+    let p5Canvas = createCanvas(670, 1000);
+    p5Canvas.parent(document.getElementById("canvas"));
+    canvas = p5Canvas.canvas;
 
-function createText(name, type, value="") {
-    let input = document.createElement("input");
-    input.type = type;
-    input.id = name;
-    input.value = value;
-    let label = document.createElement("label");
-    label.target = name;
-    label.innerHTML = name + ": ";
-    document.getElementById("inputs").appendChild(label);
-    document.getElementById("inputs").appendChild(input);
-    return input;
+    name = document.getElementById("name");
+    cost = document.getElementById("cost");
+    attack = document.getElementById("attack");
+    health = document.getElementById("health");
+    effect = document.getElementById("effect");
+    frameRate(10);
 }
 
 function draw() {
