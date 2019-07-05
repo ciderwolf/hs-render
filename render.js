@@ -1,5 +1,9 @@
 let style, canvas;
-let name, cost, attack, health, effect;
+const name = document.getElementById("name");
+const cost = document.getElementById("cost");
+const attack = document.getElementById("attack");
+const health = document.getElementById("health");
+const effect = document.getElementById("effect");
 const debug = false;
 let leeroy;
 
@@ -22,24 +26,21 @@ function setup() {
     let p5Canvas = createCanvas(670, 1000);
     p5Canvas.parent(document.getElementById("canvas"));
     canvas = p5Canvas.canvas;
-
-    name = document.getElementById("name");
-    cost = document.getElementById("cost");
-    attack = document.getElementById("attack");
-    health = document.getElementById("health");
-    effect = document.getElementById("effect");
     frameRate(10);
 }
 
 function draw() {
     background(155);
     let cardType = 'minion';
+    const rarity = getRarity();
     if(style !== undefined) {
         drawAsset(style[cardType].portrait.image);
         drawAsset(style[cardType].base.image);
-        drawAsset(style[cardType].classDecoration.image, "neutral");
-        drawAsset(style[cardType].elite.image);
-        drawAsset(style[cardType].rarity.image, "legendary");
+        drawAsset(style[cardType].classDecoration.image, getClass());
+        if(rarity == "legendary") {
+            drawAsset(style[cardType].elite.image);
+        }
+        drawAsset(style[cardType].rarity.image, rarity);
         drawAsset(style[cardType].health.image);
         drawAsset(style[cardType].attack.image);
         drawAsset(style[cardType].cost.image);
@@ -57,9 +58,13 @@ function draw() {
         noStroke();
         textFont(fontMap[style[cardType].description.font.family]);
         textSize(style[cardType].description.font.size);
-        textSize(20);
+        textSize(18);
         textAlign(CENTER);
         text(effect.value, style[cardType].description.text.x, style[cardType].description.text.y, style[cardType].description.text.width, style[cardType].description.text.height);
+        noFill();
+        stroke(0);
+        strokeWeight(1);
+        rect(style[cardType].description.text.x, style[cardType].description.text.y, style[cardType].description.text.width, style[cardType].description.text.height);
     }
     // noLoop();
 
@@ -69,6 +74,26 @@ function drawText(asset) {
 
 }
 
+function getRarity() {
+    let checked = document.querySelector("input[name=rarity]:checked");
+    let rarity = "legendary";
+    if(checked) {
+        rarity = document.querySelector("input[name=rarity]:checked").id.replace("rarity-", "");
+    }
+    return rarity;
+}
+
+function getClass() {
+    let checked = document.querySelector("input[name=class]:checked");
+    let className = "neutral";
+    if(checked) {
+        className = document.querySelector("input[name=class]:checked").id.replace("class-", "");
+    }
+    return className;
+}
+
 function drawAsset(img, name='default') {
-    image(img.assets[name], img.x, img.y, img.width, img.height);
+    if(img.assets[name]) {
+        image(img.assets[name], img.x, img.y, img.width, img.height);
+    }
 }

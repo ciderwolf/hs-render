@@ -1,20 +1,98 @@
 <html>
     <head>
         <title>Custom Hearthstone Render</title>
+        <link rel="stylesheet" href="assets/css/styles.css">
         <script src="p5.js"></script>
         <script type="text/javascript" src="util.js"></script>
-        <script type="text/javascript" src="render.js"></script>
+        <script type="text/javascript" src="bezier.js"></script>
     </head>
     <body style="display: flex">
         <div id=canvas></div>
         <div id=inputs>
-            <label for=name>Name: </label><input type=text id=name value="Leeroy Jenkins"><br/>
-            <label for=cost>Cost: </label><input type=number id=cost value="5"><br/>
-            <label for=attack>Attack: </label><input type=number id=attack value="6"><br/>
-            <label for=health>Health: </label><input type=number id=health value="2"><br/>
-            <label for=effect>Effect: </label><textarea id=effect>Battlecry: Summon two 1/1 Whelps for your opponent.</textarea>
+            <div class="input-group text">
+                <label for=name>Name: </label>
+                <input type=text id=name placeholder="Name" value="Leeroy Jenkins"><br/>
+                <label for=tribe>Tribe: </label>
+                <input type=text placeholder="Tribe">
+            </div>
+            <div class=input-group>
+                <label>
+                    <input type=radio name=class id=class-rogue>
+                    <img src="assets/images/class_rogue.png">
+                </label>
+                <label>
+                    <input type=radio name=class id=class-mage>
+                    <img src="assets/images/class_mage.png">
+                </label>
+                <label>
+                    <input type=radio name=class id=class-hunter>
+                    <img src="assets/images/class_hunter.png">
+                </label>
+                <label>
+                    <input type=radio name=class id=class-shaman>
+                    <img src="assets/images/class_shaman.png">
+                </label>
+                <label>
+                    <input type=radio name=class id=class-warlock>
+                    <img src="assets/images/class_warlock.png">
+                </label>
+            </div>
+            <div class=input-group style="justify-content: baseline">
+                <label>
+                    <input type=radio name=class id=class-paladin>
+                    <img src="assets/images/class_paladin.png">
+                </label>
+                <label>
+                    <input type=radio name=class id=class-warrior>
+                    <img src="assets/images/class_warrior.png">
+                </label>
+                <label>
+                    <input type=radio name=class id=class-druid>
+                    <img src="assets/images/class_druid.png">
+                </label>
+                <label>
+                    <input type=radio name=class id=class-priest>
+                    <img src="assets/images/class_priest.png">
+                </label>
+            </div>
+            <div class=input-group style="width: 50%; margin: 0 auto;">
+                <label>
+                    <input type=radio name=rarity id=rarity-free>
+                    <img src="assets/images/gem_basic.png">
+                </label>
+                <label>
+                    <input type=radio name=rarity id=rarity-common>
+                    <img src="assets/images/gem_common.png">
+                </label>
+                <label>
+                    <input type=radio name=rarity id=rarity-rare>
+                    <img src="assets/images/gem_rare.png">
+                </label>
+                <label>
+                    <input type=radio name=rarity id=rarity-epic>
+                    <img src="assets/images/gem_epic.png">
+                </label>     
+                <label>
+                    <input type=radio name=rarity id=rarity-legendary checked>
+                    <img src="assets/images/gem_legendary.png">
+                </label>
+            </div>
+            <div id="minion" class="input-group text">
+                <label for=cost><img class=input-label src="assets/images/cost.png"/></label>
+                <input type=number id=cost placeholder="Cost" value="5"><br/>
+                <label for=attack><img class=input-label src="assets/images/attack.png"/></label>
+                <input type=number id=attack value="6"><br/>
+                <label for=health><img class=input-label src="assets/images/health.png"/></label>
+                <input type=number id=health value="2"><br/>
+            </div>
+            <div class="text">
+                <label for=effect>Effect: </label>
+            </div>
+            <textarea id=effect placeholder="Card Text">Charge. Battlecry: Summon two 1/1 Whelps for your opponent.</textarea>
         </div>
+        <div class=glow></div>
     </body>
-    <script type="text/javascript" src="bezier.js"></script>
+    <script type="text/javascript" src="render.js"></script>
+
 
 </html>

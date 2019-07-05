@@ -1,0 +1,66 @@
+input {
+    width: 100%;
+    font-size: 18pt;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 15px;
+}
+
+.input-group {
+    display: flex;
+    justify-content: center;
+}
+
+[type=radio] { 
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+  
+/* IMAGE STYLES */
+[type=radio] + img {
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: .2s;
+    border-bottom: 5px solid white;
+    border-radius: 30%;
+    padding: 6px;
+}
+  
+  /* CHECKED STYLES */
+[type=radio]:checked + img {
+    border-bottom: 5px solid black;
+    border-radius: 50%;
+}
+
+/* CHECKED STYLES */
+[name=class] + img {
+    width: 64px;
+}
+
+.text label {
+    margin: 15px 0;
+    font-family: Belwe;
+    font-size: 24pt;
+}
+
+textarea {
+    width: 100%;
+    height: 300px;
+    font-size: 18pt;
+    font-family: 'Courier New', Courier, monospace
+}
+
+#inputs {
+    width: 50%;
+    padding: 15px;
+    border: 1px solid black;
+    margin: 5px;
+    height: min-content;
+    min-width: 400px;
+}
+
+.input-label {
+    width: auto;
+    height: 32px;
+}
