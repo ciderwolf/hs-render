@@ -1,45 +1,68 @@
-
-/* eslint-disable no-undef */
 let style, canvas;
-const nameInput = document.getElementById("name");
-const costInput = document.getElementById("cost");
-const attackInput = document.getElementById("attack");
-const healthInput = document.getElementById("health");
-const effectInput = document.getElementById("effect");
+
+const inputs = {
+    name: document.getElementById("name"),
+    cost: document.getElementById("cost"),
+    attack: document.getElementById("attack"),
+    health: document.getElementById("health"),
+    effect: document.getElementById("effect"),
+    race: document.getElementById("race"),
+    durability: document.getElementById("durability"),
+    weaponAttack: document.getElementById("weapon-attack"),
+    armor: document.getElementById("armor"),
+};
+
+const inputNames = {
+    "weapon-attack": "attack",
+    "durability": "health"
+}
+
+const cardInputs = {
+    minion: ["race", "cost", "attack", "health"],
+    spell: ["cost"],
+    weapon: ["cost", "weapon-attack", "durability"],
+    hero_power: ["cost"],
+    hero: ["cost", "armor"]
+}
+
+let cardType = "weapon";
+
 const debug = false;
 let leeroy;
 
 const fontMap = {
     "Belwe Bd BT": "Belwe",
-    "Franklin Gothic FS": "Untitled2"
+    "Franklin Gothic FS": undefined
 };
 
-// eslint-disable-next-line no-unused-vars
 function preload() {
     loadStyle("assets/cards/styles/default/", s => {
         style = s;
         style.minion.portrait.image.assets.default = leeroy;
+        style.spell.portrait.image.assets.default = leeroy;
     });
     leeroy = loadImage('assets/images/leeroy.png');
-    // fontMap["Franklin Gothic FS"] = loadFont("assets/fonts/mem.ttf")
     fontMap["Franklin Gothic FS"] = {
         normal: loadFont("assets/fonts/franklin-gothic.ttf"),
         bold: loadFont("assets/fonts/Untitled2Bold.ttf")
     }
 }
 
-// eslint-disable-next-line no-unused-vars
 function setup() {
     let p5Canvas = createCanvas(670, 1000);
     p5Canvas.parent(document.getElementById("canvas"));
     canvas = p5Canvas.canvas;
-    frameRate(10);
+    noLoop();
+    let inputs = document.getElementsByTagName("input");
+    for(let input of inputs) {
+        input.oninput = draw;
+    }
+    document.getElementById("effect").onkeyup = draw;
 }
 
-// eslint-disable-next-line no-unused-vars
 function draw() {
     background(155);
-    let cardType = 'minion';
+    showInputs(cardType);
     const rarity = getRarity();
     if(style !== undefined) {
         drawAsset(style[cardType].portrait.image);
@@ -49,9 +72,16 @@ function draw() {
             drawAsset(style[cardType].elite.image);
         }
         drawAsset(style[cardType].rarity.image, rarity);
-        drawAsset(style[cardType].health.image);
-        drawAsset(style[cardType].attack.image);
-        drawAsset(style[cardType].cost.image);
+
+        for(let type of cardInputs[cardType]) {
+            let inputType = type;
+            if(Object.keys(inputNames).includes(type)) {
+                inputType = inputNames[type];
+            }
+            drawAsset(style[cardType][inputType].image);
+            drawText(style[cardType][inputType], inputs[inputType].value);
+        }
+
         drawAsset(style[cardType].name.image);
 
         fill(style[cardType].name.font.color);
@@ -60,12 +90,15 @@ function draw() {
         strokeWeight(8);
         textSize(style[cardType].name.font.size);
         textAlign(LEFT, CENTER);
-        drawName(nameInput.value, cardType, canvas);
+        drawName(inputs.name.value, cardType, canvas);
 
         drawDescription(style[cardType].description);
-        drawText(style[cardType].health, healthInput.value);
-        drawText(style[cardType].attack, attackInput.value);
-        drawText(style[cardType].cost, costInput.value);
+    }
+}
+
+function drawAsset(img, name='default') {
+    if(img.assets[name]) {
+        image(img.assets[name], img.x, img.y, img.width, img.height);
     }
 }
 
@@ -81,8 +114,6 @@ function drawText(asset, txt) {
 
 }
 
-
-
 function drawDescription(asset) {
     fill(asset.font.color);
     noStroke();
@@ -93,7 +124,7 @@ function drawDescription(asset) {
     const width = asset.text.width;
     const height = asset.text.height;
 
-    const words = effectInput.value.split(/[\s]+/);
+    const words = inputs.effect.value.split(/[\s]+/);
     let lines = [];
     let lineLength = 0;
     let line = {
@@ -175,8 +206,12 @@ function getClass() {
     return className;
 }
 
-function drawAsset(img, name='default') {
-    if(img.assets[name]) {
-        image(img.assets[name], img.x, img.y, img.width, img.height);
+function showInputs(cardType) {
+    for(let element of document.getElementsByClassName("input-optional")) {
+        if(cardInputs[cardType].includes(element.id.substring("input-".length))) {
+            element.style.display = "flex";
+        } else {
+            element.style.display = "none";
+        }
     }
 }

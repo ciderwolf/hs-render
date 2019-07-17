@@ -13,8 +13,10 @@
             <div class="input-group text">
                 <label for=name>Name: </label>
                 <input type=text id=name placeholder="Name" value="Leeroy Jenkins"><br/>
-                <label for=tribe>Tribe: </label>
-                <input type=text placeholder="Tribe">
+                <div id=input-race class=input-optional>
+                    <label for=race>Tribe: </label>
+                    <input type=text id=race placeholder="Tribe">
+                </div>
             </div>
             <div class=input-group>
                 <label>
@@ -78,13 +80,31 @@
                     <img src="assets/images/gem_legendary.png">
                 </label>
             </div>
-            <div id="minion" class="input-group text">
-                <label for=cost><img class=input-label src="assets/images/cost.png"/></label>
-                <input type=number id=cost placeholder="Cost" value="5"><br/>
-                <label for=attack><img class=input-label src="assets/images/attack.png"/></label>
-                <input type=number id=attack value="6"><br/>
-                <label for=health><img class=input-label src="assets/images/health.png"/></label>
-                <input type=number id=health value="2"><br/>
+            <div class="input-group text">
+                <div id=input-cost class=input-optional>
+                    <label for=cost><img class=input-label src="assets/images/cost.png"/></label>
+                    <input type=number id=cost placeholder="Cost" value="5"><br/>
+                </div>
+                <div id=input-attack class=input-optional>
+                    <label for=attack><img class=input-label src="assets/images/attack.png"/></label>
+                    <input type=number id=attack value="6"><br/>
+                </div>
+                <div id=input-health class=input-optional>
+                    <label for=health><img class=input-label src="assets/images/health.png"/></label>
+                    <input type=number id=health value="2"><br/>
+                </div>
+                <div id=input-weapon-attack class=input-optional>
+                    <label for=weapon-attack><img class=input-label src="assets/images/weapon-attack.png"/></label>
+                    <input type=number id=weapon-attack value="5"><br/>
+                </div>
+                <div id=input-durability class=input-optional>
+                    <label for=durability><img class=input-label src="assets/images/durability.png"/></label>
+                    <input type=number id=durability value="2"><br/>
+                </div>
+                <div id=input-armor class=input-optional>
+                    <label for=armor><img class=input-label src="assets/images/armor.png"/></label>
+                    <input type=number id=armor value="5"><br/>
+                </div>
             </div>
             <div class="text">
                 <label for=effect>Effect: </label>
