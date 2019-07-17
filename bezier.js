@@ -7,7 +7,7 @@ function drawName(name, cardType, canvas) {
 function drawStack(name, ctx, cardType) {
     let curve = style[cardType].name.textCurve;
 
-    ribbon = {maxChar: 50, startX: curve.start.x, startY: curve.start.y, 
+    const ribbon = {maxChar: 50, startX: curve.start.x, startY: curve.start.y, 
               control1X: curve.c1.x, control1Y: curve.c1.y, 
               control2X: curve.c2.x, control2Y: curve.c2.y, 
               endX: curve.end.x, endY: curve.end.y};
@@ -37,9 +37,9 @@ function fillRibbon(str, ribbon, ctx) {
 
     let xDist = 0;
     for (let i = 0; i < curveSample; i++) {
-        a = new Bezier2(i / curveSample, ribbon.startX, ribbon.startY, ribbon.control1X, ribbon.control1Y, ribbon.control2X, ribbon.control2Y, ribbon.endX, ribbon.endY);
-        b = new Bezier2((i + 1) / curveSample, ribbon.startX, ribbon.startY, ribbon.control1X, ribbon.control1Y, ribbon.control2X, ribbon.control2Y, ribbon.endX, ribbon.endY);
-        c = new Bezier(a, b, xDist);
+        const a = new Bezier2(i / curveSample, ribbon.startX, ribbon.startY, ribbon.control1X, ribbon.control1Y, ribbon.control2X, ribbon.control2Y, ribbon.endX, ribbon.endY);
+        const b = new Bezier2((i + 1) / curveSample, ribbon.startX, ribbon.startY, ribbon.control1X, ribbon.control1Y, ribbon.control2X, ribbon.control2Y, ribbon.endX, ribbon.endY);
+        const c = new Bezier(a, b, xDist);
         xDist += c.dist;
         // console.log(xDist)
         textCurve.push({bezier: a, curve: c.curve});
@@ -66,7 +66,7 @@ function fillRibbon(str, ribbon, ctx) {
         }
     }
 
-    for (i = 0; i < textLength ; i++) {
+    for (let i = 0; i < textLength ; i++) {
         ctx.save();
         ctx.translate(textCurve[p].bezier.point.x, textCurve[p].bezier.point.y);
         ctx.rotate(textCurve[p].curve.rad);

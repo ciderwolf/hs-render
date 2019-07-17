@@ -1,11 +1,11 @@
 
 /* eslint-disable no-undef */
 let style, canvas;
-const name = document.getElementById("name");
-const cost = document.getElementById("cost");
-const attack = document.getElementById("attack");
-const health = document.getElementById("health");
-const effect = document.getElementById("effect");
+const nameInput = document.getElementById("name");
+const costInput = document.getElementById("cost");
+const attackInput = document.getElementById("attack");
+const healthInput = document.getElementById("health");
+const effectInput = document.getElementById("effect");
 const debug = false;
 let leeroy;
 
@@ -60,12 +60,24 @@ function draw() {
         strokeWeight(8);
         textSize(style[cardType].name.font.size);
         textAlign(LEFT, CENTER);
-        drawName(name.value, cardType, canvas);
+        drawName(nameInput.value, cardType, canvas);
 
         drawDescription(style[cardType].description);
-
+        drawText(style[cardType].health, healthInput.value);
+        drawText(style[cardType].attack, attackInput.value);
+        drawText(style[cardType].cost, costInput.value);
     }
-    noLoop();
+}
+
+function drawText(asset, txt) {
+    fill(asset.font.color);
+    textFont(fontMap[asset.font.family]);
+    textAlign(LEFT, TOP)
+    textSize(asset.font.size);
+    strokeWeight(10);
+    stroke(0);
+
+    text(txt, asset.text.x + (asset.text.width - textWidth(txt))/2, asset.text.y - 15);
 
 }
 
@@ -81,7 +93,7 @@ function drawDescription(asset) {
     const width = asset.text.width;
     const height = asset.text.height;
 
-    const words = effect.value.split(/[\s]+/);
+    const words = effectInput.value.split(/[\s]+/);
     let lines = [];
     let lineLength = 0;
     let line = {
@@ -96,6 +108,7 @@ function drawDescription(asset) {
         }
         textFont(font);
         let bounds = font.textBounds(word + " ", 0, 0, asset.font.size);
+        bounds.h += textDescent();
         bounds.word = word;
         bounds.font = font;
         if(lineLength + bounds.w <= width) {
@@ -117,7 +130,7 @@ function drawDescription(asset) {
     const h = textHeight(lines);
     
     let lineX = textX;
-    let y = textY + (height - h) / 2;
+    let y = textY + (height - h) / 2 + (h / lines.length) / 4;
     for(lineWords of lines) {
         let x = lineX + (width - lineWords.width) / 2;
         let maxH = 0;
