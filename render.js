@@ -1,3 +1,5 @@
+
+/* eslint-disable no-undef */
 let style, canvas;
 const name = document.getElementById("name");
 const cost = document.getElementById("cost");
@@ -9,19 +11,24 @@ let leeroy;
 
 const fontMap = {
     "Belwe Bd BT": "Belwe",
-    "Franklin Gothic FS": undefined
+    "Franklin Gothic FS": "Untitled2"
 };
 
+// eslint-disable-next-line no-unused-vars
 function preload() {
     loadStyle("assets/cards/styles/default/", s => {
         style = s;
         style.minion.portrait.image.assets.default = leeroy;
     });
     leeroy = loadImage('assets/images/leeroy.png');
-    bodyFont = loadFont("assets/fonts/franklin-gothic.ttf");
-    fontMap["Franklin Gothic FS"] = bodyFont;
+    // fontMap["Franklin Gothic FS"] = loadFont("assets/fonts/mem.ttf")
+    fontMap["Franklin Gothic FS"] = {
+        normal: loadFont("assets/fonts/franklin-gothic.ttf"),
+        bold: loadFont("assets/fonts/Untitled2Bold.ttf")
+    }
 }
 
+// eslint-disable-next-line no-unused-vars
 function setup() {
     let p5Canvas = createCanvas(670, 1000);
     p5Canvas.parent(document.getElementById("canvas"));
@@ -29,6 +36,7 @@ function setup() {
     frameRate(10);
 }
 
+// eslint-disable-next-line no-unused-vars
 function draw() {
     background(155);
     let cardType = 'minion';
@@ -54,25 +62,87 @@ function draw() {
         textAlign(LEFT, CENTER);
         drawName(name.value, cardType, canvas);
 
-        fill(style[cardType].description.font.color);
-        noStroke();
-        textFont(fontMap[style[cardType].description.font.family]);
-        textSize(style[cardType].description.font.size);
-        textSize(18);
-        textAlign(CENTER);
-        text(effect.value, style[cardType].description.text.x, style[cardType].description.text.y, style[cardType].description.text.width, style[cardType].description.text.height);
-        noFill();
-        stroke(0);
-        strokeWeight(1);
-        rect(style[cardType].description.text.x, style[cardType].description.text.y, style[cardType].description.text.width, style[cardType].description.text.height);
+        drawDescription(style[cardType].description);
+
     }
-    // noLoop();
+    noLoop();
 
 }
 
-function drawText(asset) {
 
+
+function drawDescription(asset) {
+    fill(asset.font.color);
+    noStroke();
+    textSize(asset.font.size);
+    const fonts = fontMap[asset.font.family];
+    const textX = asset.text.x;
+    const textY = asset.text.y;
+    const width = asset.text.width;
+    const height = asset.text.height;
+
+    const words = effect.value.split(/[\s]+/);
+    let lines = [];
+    let lineLength = 0;
+    let line = {
+        words: [],
+        width: 0
+    };
+    let longestLine = 0;
+    for(let word of words) {
+        let font = fonts.normal;
+        if(word.includes("Charge") || word.includes("Battlecry")) {
+            font = fonts.bold;
+        }
+        textFont(font);
+        let bounds = font.textBounds(word + " ", 0, 0, asset.font.size);
+        bounds.word = word;
+        bounds.font = font;
+        if(lineLength + bounds.w <= width) {
+            lineLength += bounds.w;
+            line.words.push(bounds);
+            line.width += bounds.w;
+        } else {
+            lines.push(line);
+            longestLine = max(longestLine, lineLength);
+            lineLength = bounds.w;
+            line = {
+                words: [bounds],
+                width: bounds.w
+            };
+        }
+    }
+    lines.push(line);
+
+    const h = textHeight(lines);
+    
+    let lineX = textX;
+    let y = textY + (height - h) / 2;
+    for(lineWords of lines) {
+        let x = lineX + (width - lineWords.width) / 2;
+        let maxH = 0;
+        for(bounds of lineWords.words) {
+            textFont(bounds.font);
+            text(bounds.word, x, y);
+            x += bounds.w;
+            maxH = max(maxH, bounds.h);
+        }
+        y += maxH;
+    }
 }
+
+function textHeight(lines) {
+    let h = 0;
+    for(let line of lines) {
+        let lineHeight = 0;
+        for(let word of line.words) {
+            lineHeight = max(word.h, lineHeight);
+        }
+        h += lineHeight;
+    }
+    return h;
+}
+
 
 function getRarity() {
     let checked = document.querySelector("input[name=rarity]:checked");

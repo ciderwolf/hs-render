@@ -38,6 +38,11 @@ input {
     width: 64px;
 }
 
+/* CHECKED STYLES */
+[name=rarity] + img {
+    width: 37px;
+}
+
 .text label {
     margin: 15px 0;
     font-family: Belwe;
