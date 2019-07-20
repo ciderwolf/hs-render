@@ -1,6 +1,5 @@
 function drawName(name, cardType, canvas) {
     let ctx = canvas.getContext('2d');
-    ctx.font = ctx.font.replace(/(\d)+px/, `${style[cardType].name.font.size}pt`);
     drawStack(name, ctx, cardType);
 }
 
@@ -41,7 +40,6 @@ function fillRibbon(str, ribbon, ctx) {
         const b = new Bezier2((i + 1) / curveSample, ribbon.startX, ribbon.startY, ribbon.control1X, ribbon.control1Y, ribbon.control2X, ribbon.control2Y, ribbon.endX, ribbon.endY);
         const c = new Bezier(a, b, xDist);
         xDist += c.dist;
-        // console.log(xDist)
         textCurve.push({bezier: a, curve: c.curve});
     }
 

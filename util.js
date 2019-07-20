@@ -28,6 +28,9 @@ async function loadStyle(path, callback) {
                         style[type][property].image.assets[imagePath] = image;
                     }
                 }
+                else if(property == "custom") {
+                    style[type][property].custom.image.assets.base = loadImage(path + style[type][property].custom.image.assets.base);
+                }
             }
         }
     }

@@ -13,22 +13,20 @@ const inputs = {
 };
 
 const inputNames = {
-    "weapon-attack": "attack",
+    "weaponAttack": "attack",
     "durability": "health"
 }
 
 const cardInputs = {
     minion: ["race", "cost", "attack", "health"],
     spell: ["cost"],
-    weapon: ["cost", "weapon-attack", "durability"],
+    weapon: ["cost", "weaponAttack", "durability"],
     hero_power: ["cost"],
     hero: ["cost", "armor"]
 }
 
-let cardType = "weapon";
-
 const debug = false;
-let leeroy;
+let leeroy, truesilver;
 
 const fontMap = {
     "Belwe Bd BT": "Belwe",
@@ -39,13 +37,16 @@ function preload() {
     loadStyle("assets/cards/styles/default/", s => {
         style = s;
         style.minion.portrait.image.assets.default = leeroy;
-        style.spell.portrait.image.assets.default = leeroy;
+        // style.spell.portrait.image.assets.default = leeroy;
+        style.weapon.portrait.image.assets.default = truesilver;
     });
     leeroy = loadImage('assets/images/leeroy.png');
+    truesilver = loadImage('assets/images/truesilver.png');
     fontMap["Franklin Gothic FS"] = {
         normal: loadFont("assets/fonts/franklin-gothic.ttf"),
-        bold: loadFont("assets/fonts/Untitled2Bold.ttf")
+        bold: loadFont("assets/fonts/franklin-gothic-bold.ttf")
     }
+    // fontMap["Belwe Bd BT"] = loadFont("assets/fonts/BelweBoldBT.ttf")
 }
 
 function setup() {
@@ -61,25 +62,33 @@ function setup() {
 }
 
 function draw() {
-    background(155);
+    clear();
+    const cardType = getType();
+
     showInputs(cardType);
     const rarity = getRarity();
     if(style !== undefined) {
         drawAsset(style[cardType].portrait.image);
         drawAsset(style[cardType].base.image);
-        drawAsset(style[cardType].classDecoration.image, getClass());
-        if(rarity == "legendary") {
-            drawAsset(style[cardType].elite.image);
+        if(cardType != "hero_power") {
+            drawAsset(style[cardType].classDecoration.image, getClass());
+            if(rarity == "legendary") {
+                drawAsset(style[cardType].elite.image);
+            }
+            drawAsset(style[cardType].custom.custom.image, "base");
+            drawAsset(style[cardType].rarity.image, rarity);
         }
-        drawAsset(style[cardType].rarity.image, rarity);
+        
 
         for(let type of cardInputs[cardType]) {
             let inputType = type;
             if(Object.keys(inputNames).includes(type)) {
                 inputType = inputNames[type];
             }
-            drawAsset(style[cardType][inputType].image);
-            drawText(style[cardType][inputType], inputs[inputType].value);
+            if(type != "race" || inputs[inputType].value != "") {
+                drawAsset(style[cardType][inputType].image);
+                drawText(style[cardType][inputType], inputs[inputType].value);
+            }
         }
 
         drawAsset(style[cardType].name.image);
@@ -97,7 +106,7 @@ function draw() {
 }
 
 function drawAsset(img, name='default') {
-    if(img.assets[name]) {
+    if(img && img.assets && img.assets[name]) {
         image(img.assets[name], img.x, img.y, img.width, img.height);
     }
 }
@@ -205,6 +214,16 @@ function getClass() {
     }
     return className;
 }
+
+function getType() {
+    let checked = document.querySelector("input[name=type]:checked");
+    let typeName = "minion";
+    if(checked) {
+        typeName = document.querySelector("input[name=type]:checked").id.replace("type-", "");
+    }
+    return typeName;
+}
+
 
 function showInputs(cardType) {
     for(let element of document.getElementsByClassName("input-optional")) {

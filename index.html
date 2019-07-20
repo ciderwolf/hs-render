@@ -20,6 +20,32 @@
             </div>
             <div class=input-group>
                 <label>
+                    <input type=radio name=type id=type-minion checked>
+                    <img src="assets/images/type_minion.png">
+                </label>
+                <label>
+                    <input type=radio name=type id=type-spell>
+                    <img src="assets/images/type_spell.png">
+                </label>
+                <label>
+                    <input type=radio name=type id=type-weapon>
+                    <img src="assets/images/type_weapon.png">
+                </label>
+                <label>
+                    <input type=radio name=type id=type-hero>
+                    <img src="assets/images/type_hero.png">
+                </label>
+                <label>
+                    <input type=radio name=type id=type-hero_power>
+                    <img src="assets/images/type_hero_power.png">
+                </label>
+            </div>
+            <div class=input-group>
+                <label>
+                    <input type=radio name=class id=class-neutral checked>
+                    <img src="assets/images/class_neutral.png">
+                </label> 
+                <label>
                     <input type=radio name=class id=class-rogue>
                     <img src="assets/images/class_rogue.png">
                 </label>
@@ -35,12 +61,12 @@
                     <input type=radio name=class id=class-shaman>
                     <img src="assets/images/class_shaman.png">
                 </label>
+            </div>
+            <div class=input-group style="justify-content: baseline">
                 <label>
                     <input type=radio name=class id=class-warlock>
                     <img src="assets/images/class_warlock.png">
-                </label>
-            </div>
-            <div class=input-group style="justify-content: baseline">
+                </label>                
                 <label>
                     <input type=radio name=class id=class-paladin>
                     <img src="assets/images/class_paladin.png">
@@ -83,27 +109,27 @@
             <div class="input-group text">
                 <div id=input-cost class=input-optional>
                     <label for=cost><img class=input-label src="assets/images/cost.png"/></label>
-                    <input type=number id=cost placeholder="Cost" value="5"><br/>
+                    <input type=number min=0 max=99 step="1" id=cost placeholder="Cost" value="5"><br/>
                 </div>
                 <div id=input-attack class=input-optional>
                     <label for=attack><img class=input-label src="assets/images/attack.png"/></label>
-                    <input type=number id=attack value="6"><br/>
+                    <input type=number min=0 max=99 step="1" id=attack value="6"><br/>
                 </div>
                 <div id=input-health class=input-optional>
                     <label for=health><img class=input-label src="assets/images/health.png"/></label>
-                    <input type=number id=health value="2"><br/>
+                    <input type=number min=0 max=99 step=1 id=health value="2"><br/>
                 </div>
-                <div id=input-weapon-attack class=input-optional>
-                    <label for=weapon-attack><img class=input-label src="assets/images/weapon-attack.png"/></label>
-                    <input type=number id=weapon-attack value="5"><br/>
+                <div id=input-weaponAttack class=input-optional>
+                    <label for=weaponAttack><img class=input-label src="assets/images/weaponAttack.png"/></label>
+                    <input type=number min=0 max=99 step=1 id=weaponAttack value="5"><br/>
                 </div>
                 <div id=input-durability class=input-optional>
                     <label for=durability><img class=input-label src="assets/images/durability.png"/></label>
-                    <input type=number id=durability value="2"><br/>
+                    <input type=number min=0 max=99 step=1 id=durability value="2"><br/>
                 </div>
                 <div id=input-armor class=input-optional>
                     <label for=armor><img class=input-label src="assets/images/armor.png"/></label>
-                    <input type=number id=armor value="5"><br/>
+                    <input type=number min=0 max=99 step=1 id=armor value="5"><br/>
                 </div>
             </div>
             <div class="text">
