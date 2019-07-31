@@ -68,7 +68,8 @@ function draw() {
     showInputs(cardType);
     const rarity = getRarity();
     if(style !== undefined) {
-        drawAsset(style[cardType].portrait.image);
+        style[cardType].portrait.image.assets.default = leeroy;
+        maskImage(style[cardType].portrait);
         drawAsset(style[cardType].base.image);
         if(cardType != "hero_power") {
             drawAsset(style[cardType].classDecoration.image, getClass());
@@ -103,6 +104,23 @@ function draw() {
 
         drawDescription(style[cardType].description);
     }
+}
+
+function maskImage(asset) {
+    let img = asset.image.assets.default.get();
+    img.resize(asset.image.width, asset.image.height);
+    let shape = asset.clip.points.map((val) => [val.x - asset.image.x, val.y - asset.image.y]);
+    img.loadPixels();
+    for(let x = 0; x < img.width; x ++) {
+        for(let y = 0; y < img.height; y ++) {
+            let index = (x + y * img.width) * 4;
+            if(!pointInPolygon([x, y], shape)) {
+                img.pixels[index + 3] = 0;
+            }
+        }
+    }
+    img.updatePixels();
+    image(img, asset.image.x, asset.image.x, asset.image.width, asset.image.height);
 }
 
 function drawAsset(img, name='default') {

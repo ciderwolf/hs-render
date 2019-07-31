@@ -15,6 +15,31 @@ function clamp(value, min, max) {
     return value;
 }
 
+function pointInPolygon(point, shape) {
+    // ray-casting algorithm based on
+    // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+    
+    let x = point[0];
+    let y = point[1];
+    
+    let inside = false;
+    for (let i = 0, j = shape.length - 1; i < shape.length; j = i++) {
+        let xi = shape[i][0];
+        let yi = shape[i][1];
+        let xj = shape[j][0];
+        let yj = shape[j][1];
+        
+        let intersect = ((yi > y) != (yj > y))
+            && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+        if (intersect) {
+            inside = !inside;
+        }
+    }
+    
+    return inside;
+}
+
+
 async function loadStyle(path, callback) {
     const response = await fetch(path + "data.json");
     let style = await response.json();
