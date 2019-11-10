@@ -36,9 +36,6 @@ const fontMap = {
 function preload() {
     loadStyle("assets/cards/styles/default/", s => {
         style = s;
-        style.minion.portrait.image.assets.default = leeroy;
-        // style.spell.portrait.image.assets.default = leeroy;
-        style.weapon.portrait.image.assets.default = truesilver;
     });
     leeroy = loadImage('assets/images/leeroy.png');
     truesilver = loadImage('assets/images/truesilver.png');
@@ -46,7 +43,6 @@ function preload() {
         normal: loadFont("assets/fonts/franklin-gothic.ttf"),
         bold: loadFont("assets/fonts/franklin-gothic-bold.ttf")
     }
-    // fontMap["Belwe Bd BT"] = loadFont("assets/fonts/BelweBoldBT.ttf")
 }
 
 function setup() {
@@ -68,7 +64,7 @@ function draw() {
     showInputs(cardType);
     const rarity = getRarity();
     if(style !== undefined) {
-        style[cardType].portrait.image.assets.default = leeroy;
+        style[cardType].portrait.image.assets.default = truesilver;
         maskImage(style[cardType].portrait);
         drawAsset(style[cardType].base.image);
         if(cardType != "hero_power") {
@@ -151,7 +147,7 @@ function drawDescription(asset) {
     const width = asset.text.width;
     const height = asset.text.height;
 
-    const words = inputs.effect.value.split(/[\s]+/);
+    const words = quill.getText().split(/[\s]+/);
     let lines = [];
     let lineLength = 0;
     let line = {

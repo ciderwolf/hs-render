@@ -81,3 +81,12 @@ textarea {
     width: auto;
     height: 32px;
 }
+
+@font-face {
+    font-family: Belwe;
+    src: url("/assets/fonts/Belwe-Bold.woff");
+}
+
+#p5_loading {
+    font-family: 'Belwe';
+}

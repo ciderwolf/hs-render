@@ -70,8 +70,8 @@ function fillRibbon(str, ribbon, ctx) {
         ctx.rotate(textCurve[p].curve.rad);
         text(ribbonText[i], 0, 0);
         ctx.restore();
-        
-        let x1 = ctx.measureText(ribbonText[i]).width + letterPadding ;
+
+        let x1 = ctx.measureText(ribbonText[i]).width + letterPadding;
         let x2 = 0;	
         for (let j = p; j < curveSample; j ++){
             x2 = x2 + textCurve[j].curve.dist;
