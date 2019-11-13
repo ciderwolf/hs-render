@@ -1,6 +1,6 @@
-#canvas {
+/* #canvas {
     zoom: 0.75;
-}
+} */
 
 input {
     width: 100%;
@@ -89,4 +89,20 @@ textarea {
 
 #p5_loading {
     font-family: 'Belwe';
+}
+
+#quill-container {
+    display: flex;
+}
+.ql-formats {
+    width: min-content;
+    margin-right: 0px !important;
+}
+.ql-toolbar {
+    border-right: none !important;
+}
+.ql-container {
+    border: 1px solid #ccc !important;
+    width: -webkit-fill-available;
+    height: auto;
 }

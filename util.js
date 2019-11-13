@@ -15,10 +15,7 @@ function clamp(value, min, max) {
     return value;
 }
 
-function pointInPolygon(point, shape) {
-    // ray-casting algorithm based on
-    // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
-    
+function pointInPolygon(point, shape) {    
     let x = point[0];
     let y = point[1];
     

@@ -1,4 +1,7 @@
 let style, canvas;
+let offsetX = 0;
+let offsetY = 0;
+const canvasZoom = 0.75;
 
 const inputs = {
     name: document.getElementById("name"),
@@ -10,6 +13,7 @@ const inputs = {
     durability: document.getElementById("durability"),
     weaponAttack: document.getElementById("weapon-attack"),
     armor: document.getElementById("armor"),
+    imageZoom: document.getElementById("image-zoom")
 };
 
 const inputNames = {
@@ -49,12 +53,21 @@ function setup() {
     let p5Canvas = createCanvas(670, 1000);
     p5Canvas.parent(document.getElementById("canvas"));
     canvas = p5Canvas.canvas;
+    canvas.style.zoom = canvasZoom;
     noLoop();
-    let inputs = document.getElementsByTagName("input");
-    for(let input of inputs) {
-        input.oninput = draw;
-    }
-    document.getElementById("effect").onkeyup = draw;
+    // let inputs = document.getElementsByTagName("input");
+    // for(let input of inputs) {
+    //     input.oninput = updateImage;
+    // }
+    // document.getElementById("effect").onkeyup = updateImage;
+}
+
+function mouseClicked() {
+    redraw();
+}
+
+function keyPresssed() {
+    redraw();
 }
 
 function draw() {
@@ -64,9 +77,7 @@ function draw() {
     showInputs(cardType);
     const rarity = getRarity();
     if(style !== undefined) {
-        style[cardType].portrait.image.assets.default = truesilver;
-        maskImage(style[cardType].portrait);
-        drawAsset(style[cardType].base.image);
+        drawCardImage(cardType);
         if(cardType != "hero_power") {
             drawAsset(style[cardType].classDecoration.image, getClass());
             if(rarity == "legendary") {
@@ -76,7 +87,6 @@ function draw() {
             drawAsset(style[cardType].rarity.image, rarity);
         }
         
-
         for(let type of cardInputs[cardType]) {
             let inputType = type;
             if(Object.keys(inputNames).includes(type)) {
@@ -87,7 +97,7 @@ function draw() {
                 drawText(style[cardType][inputType], inputs[inputType].value);
             }
         }
-
+        
         drawAsset(style[cardType].name.image);
 
         fill(style[cardType].name.font.color);
@@ -100,10 +110,38 @@ function draw() {
 
         drawDescription(style[cardType].description);
     }
+    drawing = false;
+}
+
+function drawCardImage(cardType) {
+    style[cardType].portrait.image.assets.default = leeroy;
+    maskImage(style[cardType].portrait);
+    drawAsset(style[cardType].base.image);
+}
+
+function mouseReleased() {
+    noLoop();
+}
+
+function mouseDragged(e) {
+    if(e.which == 0 || (mouseX < 0 || mouseY < 0 || mouseX > width * canvasZoom || mouseY > height * canvasZoom)) {
+        noLoop();
+        return;
+    } else {
+        loop();
+    }
+    offsetX += e.movementX;
+    offsetY += e.movementY;
+}
+
+function resetImage() {
+    offsetX = 0;
+    offsetY = 0;
+    inputs.imageZoom.value = 1;
 }
 
 function maskImage(asset) {
-    let img = asset.image.assets.default.get();
+    let img = getScaledImage(asset.image.assets.default.get(), asset);
     img.resize(asset.image.width, asset.image.height);
     let shape = asset.clip.points.map((val) => [val.x - asset.image.x, val.y - asset.image.y]);
     img.loadPixels();
@@ -116,7 +154,19 @@ function maskImage(asset) {
         }
     }
     img.updatePixels();
-    image(img, asset.image.x, asset.image.x, asset.image.width, asset.image.height);
+    image(img, asset.image.x, asset.image.y, asset.image.width, asset.image.height);
+}
+
+function getScaledImage(img, asset) {
+    const zoom = 1.0 / inputs.imageZoom.value;
+    const offsetXSpeed = zoom * img.width / asset.image.width;
+    const offsetYSpeed = zoom * img.height / asset.image.height;
+    const aspectRatio = img.height / img.width;
+    let imgWidth = img.width * zoom * aspectRatio;
+    let imgHeight = img.height * zoom;
+    let x = (img.width - imgWidth) / 2;
+    let y = (img.height - imgHeight) / 2;
+    return img.get(x - offsetX * offsetXSpeed, y - offsetY * offsetYSpeed, imgWidth, imgHeight);
 }
 
 function drawAsset(img, name='default') {
