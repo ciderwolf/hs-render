@@ -13,7 +13,8 @@ const inputs = {
     durability: document.getElementById("durability"),
     weaponAttack: document.getElementById("weapon-attack"),
     armor: document.getElementById("armor"),
-    imageZoom: document.getElementById("image-zoom")
+    imageZoom: document.getElementById("image-zoom"),
+    imageSelect: document.getElementById("image-select")
 };
 
 const inputNames = {
@@ -55,18 +56,22 @@ function setup() {
     canvas = p5Canvas.canvas;
     canvas.style.zoom = canvasZoom;
     noLoop();
-    // let inputs = document.getElementsByTagName("input");
-    // for(let input of inputs) {
-    //     input.oninput = updateImage;
-    // }
-    // document.getElementById("effect").onkeyup = updateImage;
+    inputs.imageZoom.oninput = updateZoom;
+    inputs.imageSelect.oninput = readFile;
+    inputs.effect.onkeyup = redraw;
+    for(let input of document.getElementsByTagName("input")) {
+        input.onkeyup = redraw;
+    }
 }
 
 function mouseClicked() {
     redraw();
 }
 
-function keyPresssed() {
+function updateZoom() {
+    let zoomTracker = document.getElementById("zoom-percent");
+    let zoom = inputs.imageZoom.value;
+    zoomTracker.textContent =  round(zoom * 100) + "%";
     redraw();
 }
 

@@ -1,11 +1,7 @@
-/* #canvas {
-    zoom: 0.75;
-} */
-
 input {
     width: 100%;
-    font-size: 18pt;
-    font-family: 'Courier New', Courier, monospace;
+    font-size: 12pt;
+    font-family: 'Libre Franklin', sans-serif;
     margin: 15px;
 }
 
@@ -53,19 +49,73 @@ input {
     width: 75px;
 }
 
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #000d;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+    font-family: 'Libre Franklin', sans-serif;
+    
+}
+
+.tooltip:hover .tooltiptext {
+    transition-delay: 0.3s;
+    visibility: visible;
+}
 
 .text label {
     margin: 15px 0;
     font-family: Belwe;
-    font-size: 24pt;
+    font-size: 18pt;
 }
 
-textarea {
-    width: 100%;
-    height: 200px;
-    resize: none;
-    font-size: 18pt;
-    font-family: 'Courier New', Courier, monospace
+#image-select {
+    padding: 20px;
+    width: -webkit-fill-available;
+}
+#image-zoom {
+    margin: 0px;
+}
+#reset-image {
+    background-color: white;
+    font-size: 12px;
+    font-family: 'Libre Franklin';
+    margin: 0 12px;
+    color: #444;
+    border: 1px solid #444;
+    font-weight: bold;
+    border-radius: 5px;
+}
+#reset-image:hover {
+    color: #06C;
+}
+#reset-image p {
+    width: max-content;
+    margin: 0;
+    padding: 6px 8px;
+}
+#zoom-message {
+    margin: 0px 5px;
+    margin-top: 0.25em;
+    font-family: Belwe;
+    width: max-content;
+}
+#zoom-percent {
+    color: gray;
 }
 
 #inputs {
@@ -105,4 +155,8 @@ textarea {
     border: 1px solid #ccc !important;
     width: -webkit-fill-available;
     height: auto;
+}
+.ql-editor {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 12pt;
 }
