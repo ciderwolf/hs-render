@@ -25,7 +25,7 @@ input {
 [type=radio] + img {
     cursor: pointer;
     box-sizing: border-box;
-    transition: .2s;
+    transition: 0.4s;
     border-bottom: 5px solid rgba(0, 0, 0, 0);
     border-radius: 30%;
     padding: 6px;
@@ -33,7 +33,7 @@ input {
   
   /* CHECKED STYLES */
 [type=radio]:checked + img {
-    border-bottom: 5px solid black;
+    border-bottom: 5px solid #444;
     border-radius: 50%;
 }
 
@@ -69,12 +69,12 @@ input {
     left: 50%;
     margin-left: -60px;
     font-family: 'Libre Franklin', sans-serif;
-    
 }
 
 .tooltip:hover .tooltiptext {
     transition-delay: 0.3s;
     visibility: visible;
+    pointer-events: none;
 }
 
 .text label {
@@ -121,7 +121,7 @@ input {
 #inputs {
     width: 50%;
     padding: 15px;
-    border: 1px solid black;
+    border: 1px solid #444;
     margin: 5px;
     height: min-content;
     min-width: 400px;
