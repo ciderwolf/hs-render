@@ -93,7 +93,7 @@
                 "color": "#FFFFFF",
                 "outline": "#000000",
                 "family": "Belwe Bd BT",
-                "size": 45
+                "size": 34
             },
             "textCurve": {
                 "start": {
@@ -129,7 +129,7 @@
                 "type": "textBlock",
                 "color": "#000000",
                 "family": "Franklin Gothic FS",
-                "size": 19
+                "size": 38
             },
             "text": {
                 "x": 143,
@@ -284,9 +284,7 @@
         "portrait": {
             "layer": 0,
             "image": {
-                "assets": {
-                    
-                },
+                "assets": {},
                 "x": 105,
                 "y": 100,
                 "width": 461,
@@ -398,7 +396,7 @@
                 "color": "#FFFFFF",
                 "outline": "#000000",
                 "family": "Belwe Bd BT",
-                "size": 45
+                "size": 34
             },
             "textCurve": {
                 "start": {
@@ -547,7 +545,7 @@
                 "type": "textBlock",
                 "color": "#FFFFFF",
                 "family": "Franklin Gothic FS",
-                "size": 19
+                "size": 38
             },
             "text": {
                 "x": 142,
@@ -673,9 +671,7 @@
         "portrait": {
             "layer": 0,
             "image": {
-                "assets": {
-                    
-                },
+                "assets": {},
                 "x": 98,
                 "y": 93,
                 "width": 476,
@@ -803,7 +799,7 @@
                 "color": "#FFFFFF",
                 "outline": "#000000",
                 "family": "Belwe Bd BT",
-                "size": 45
+                "size": 34
             },
             "textCurve": {
                 "start": {
@@ -854,7 +850,7 @@
                 "type": "textBlock",
                 "color": "#000000",
                 "family": "Franklin Gothic FS",
-                "size": 19
+                "size": 38
             },
             "text": {
                 "x": 150,
@@ -956,9 +952,7 @@
         "portrait": {
             "layer": 0,
             "image": {
-                "assets": {
-                    
-                },
+                "assets": {},
                 "x": 123,
                 "y": 138,
                 "width": 418,
@@ -1069,7 +1063,7 @@
                 "type": "textBlock",
                 "color": "#FFFFFF",
                 "family": "Franklin Gothic FS",
-                "size": 19
+                "size": 38
             },
             "text": {
                 "x": 155,
@@ -1084,7 +1078,7 @@
                 "color": "#FFFFFF",
                 "outline": "#000000",
                 "family": "Belwe Bd BT",
-                "size": 45
+                "size": 34
             },
             "textCurve": {
                 "start": {
@@ -1207,9 +1201,7 @@
         "portrait": {
             "layer": 0,
             "image": {
-                "assets": {
-                    
-                },
+                "assets": {},
                 "x": 121,
                 "y": 126,
                 "width": 423,
@@ -1267,7 +1259,7 @@
         }
     },
     "weapon": {
-		"elite": {
+        "elite": {
             "layer": 8,
             "image": {
                 "assets": {
@@ -1357,7 +1349,7 @@
                 "color": "#FFFFFF",
                 "outline": "#000000",
                 "family": "Belwe Bd BT",
-                "size": 45
+                "size": 34
             },
             "textCurve": {
                 "start": {
@@ -1408,7 +1400,7 @@
                 "type": "textBlock",
                 "color": "#FFFFFF",
                 "family": "Franklin Gothic FS",
-                "size": 19
+                "size": 38
             },
             "text": {
                 "x": 161,
@@ -1511,9 +1503,7 @@
         "portrait": {
             "layer": 0,
             "image": {
-                "assets": {
-                    
-                },
+                "assets": {},
                 "x": 152,
                 "y": 135,
                 "width": 384,
@@ -1607,7 +1597,7 @@
         }
     },
     "weapon_premium": {
-		"elite": {
+        "elite": {
             "layer": 9,
             "image": {
                 "assets": {
@@ -1697,7 +1687,7 @@
                 "color": "#FFFFFF",
                 "outline": "#000000",
                 "family": "Belwe Bd BT",
-                "size": 45
+                "size": 34
             },
             "textCurve": {
                 "start": {
@@ -1748,7 +1738,7 @@
                 "type": "textBlock",
                 "color": "#FFFFFF",
                 "family": "Franklin Gothic FS",
-                "size": 19
+                "size": 38
             },
             "text": {
                 "x": 161,
@@ -1931,9 +1921,7 @@
                 ]
             },
             "image": {
-                "assets": {
-                    
-                },
+                "assets": {},
                 "x": 151,
                 "y": 135,
                 "width": 384,
@@ -1990,7 +1978,7 @@
                 "type": "textBlock",
                 "color": "#000000",
                 "family": "Franklin Gothic FS",
-                "size": 22
+                "size": 44
             },
             "text": {
                 "x": 145,
@@ -2059,9 +2047,7 @@
                 ]
             },
             "image": {
-                "assets": {
-                    
-                },
+                "assets": {},
                 "x": 208,
                 "y": 163,
                 "width": 261,
@@ -2118,7 +2104,7 @@
                 "type": "textBlock",
                 "color": "#000000",
                 "family": "Franklin Gothic FS",
-                "size": 22
+                "size": 44
             },
             "text": {
                 "x": 145,
@@ -2187,9 +2173,7 @@
                 ]
             },
             "image": {
-                "assets": {
-                    
-                },
+                "assets": {},
                 "x": 208,
                 "y": 163,
                 "width": 261,
@@ -2264,7 +2248,7 @@
                 "type": "textBlock",
                 "color": "#000000",
                 "family": "Franklin Gothic FS",
-                "size": 19
+                "size": 38
             },
             "text": {
                 "x": 143,
@@ -2335,7 +2319,7 @@
                 "color": "#FFFFFF",
                 "outline": "#000000",
                 "family": "Belwe Bd BT",
-                "size": 45
+                "size": 34
             },
             "textCurve": {
                 "start": {
@@ -2416,9 +2400,7 @@
         "portrait": {
             "layer": 0,
             "image": {
-                "assets": {
-                    
-                },
+                "assets": {},
                 "x": 161,
                 "y": 137,
                 "width": 346,
@@ -2610,7 +2592,7 @@
                 "color": "#FFFFFF",
                 "outline": "#000000",
                 "family": "Belwe Bd BT",
-                "size": 45
+                "size": 34
             },
             "textCurve": {
                 "start": {
@@ -2661,7 +2643,7 @@
                 "type": "textBlock",
                 "color": "#FFFFFF",
                 "family": "Franklin Gothic FS",
-                "size": 19
+                "size": 38
             },
             "text": {
                 "x": 143,
@@ -2763,9 +2745,7 @@
         "portrait": {
             "layer": 0,
             "image": {
-                "assets": {
-                    
-                },
+                "assets": {},
                 "x": 161,
                 "y": 137,
                 "width": 346,
