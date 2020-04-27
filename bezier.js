@@ -6,25 +6,27 @@ function drawName(name, cardType, canvas) {
 function drawStack(name, ctx, cardType) {
     let curve = style[cardType].name.textCurve;
 
-    const ribbon = {maxChar: 50, startX: curve.start.x, startY: curve.start.y, 
-              control1X: curve.c1.x, control1Y: curve.c1.y, 
-              control2X: curve.c2.x, control2Y: curve.c2.y, 
-              endX: curve.end.x, endY: curve.end.y};
-    
+    const ribbon = {
+        maxChar: 50, startX: curve.start.x, startY: curve.start.y,
+        control1X: curve.c1.x, control1Y: curve.c1.y,
+        control2X: curve.c2.x, control2Y: curve.c2.y,
+        endX: curve.end.x, endY: curve.end.y
+    };
+
     ctx.save();
     ctx.beginPath();
-    
-    ctx.moveTo(ribbon.startX,ribbon.startY);
-    if(debug) {
+
+    ctx.moveTo(ribbon.startX, ribbon.startY);
+    if (debug) {
         ctx.bezierCurveTo(ribbon.control1X, ribbon.control1Y,
             ribbon.control2X, ribbon.control2Y,
             ribbon.endX, ribbon.endY);
     }
-    
+
     ctx.stroke();
     ctx.restore();
-    
-   fillRibbon(name, ribbon, ctx); 
+
+    fillRibbon(name, ribbon, ctx);
 }
 
 function fillRibbon(str, ribbon, ctx) {
@@ -40,11 +42,11 @@ function fillRibbon(str, ribbon, ctx) {
         const b = new Bezier2((i + 1) / curveSample, ribbon.startX, ribbon.startY, ribbon.control1X, ribbon.control1Y, ribbon.control2X, ribbon.control2Y, ribbon.endX, ribbon.endY);
         const c = new Bezier(a, b, xDist);
         xDist += c.dist;
-        textCurve.push({bezier: a, curve: c.curve});
+        textCurve.push({ bezier: a, curve: c.curve });
     }
 
-    // letterPadding = ctx.measureText(" ").width / 4; 
-    let letterPadding = 0;
+    let letterPadding = ctx.measureText(" ").width / 4;
+    // let letterPadding = 0;
     let textLength = ribbonText.length;
     let pixelWidth = Math.round(ctx.measureText(ribbonText).width);
 
@@ -53,18 +55,18 @@ function fillRibbon(str, ribbon, ctx) {
     let totalLength = pixelWidth + totalPadding;
     let p = 0;
 
-    let cDist = textCurve[curveSample-1].curve.cDist;
+    let cDist = textCurve[curveSample - 1].curve.cDist;
 
     let z = (cDist / 2) - (totalLength / 2);
 
-    for (let i = 0; i < curveSample; i ++){
+    for (let i = 0; i < curveSample; i++) {
         if (textCurve[i].curve.cDist >= z) {
             p = i;
             break;
         }
     }
 
-    for (let i = 0; i < textLength ; i++) {
+    for (let i = 0; i < textLength; i++) {
         ctx.save();
         ctx.translate(textCurve[p].bezier.point.x, textCurve[p].bezier.point.y);
         ctx.rotate(textCurve[p].curve.rad);
@@ -72,8 +74,8 @@ function fillRibbon(str, ribbon, ctx) {
         ctx.restore();
 
         let x1 = ctx.measureText(ribbonText[i]).width + letterPadding;
-        let x2 = 0;	
-        for (let j = p; j < curveSample; j ++){
+        let x2 = 0;
+        for (let j = p; j < curveSample; j++) {
             x2 = x2 + textCurve[j].curve.dist;
             if (x2 >= x1) {
                 p = j;
@@ -91,7 +93,7 @@ class Bezier {
         this.b2 = b2;
         this.b1 = b1;
         this.dist = Math.sqrt(((b2.x - b1.x) * (b2.x - b1.x)) + ((b2.y - b1.y) * (b2.y - b1.y)));
-        this.curve = { rad: this.rad, dist: this.dist, cDist: xDist + this.dist};
+        this.curve = { rad: this.rad, dist: this.dist, cDist: xDist + this.dist };
     }
 }
 class BezierT {

@@ -9,10 +9,9 @@ const quill = new Quill('#effect', {
     formats: ['bold', 'italic']
 });
 
-let imgstring;
 function readFile() {
-    let fileSelector =  document.getElementById("image-select");
-    if(fileSelector.files.length == 0) {
+    let fileSelector = document.getElementById("image-select");
+    if (fileSelector.files.length == 0) {
         return false;
     }
     let file = fileSelector.files[0];
@@ -20,8 +19,8 @@ function readFile() {
         return;
     }
     let reader = new FileReader();
-    reader.onload = function(f) {
-        imgstring = f.target.result;
+    reader.onload = function (f) {
+        let imgstring = f.target.result;
         leeroy = loadImage(imgstring, redraw);
     }
     reader.readAsDataURL(file);
