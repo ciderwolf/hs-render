@@ -129,7 +129,8 @@ let p5funcs = (p5: p5) => {
             p5.strokeWeight(7);
             p5.textSize(style[cardType].name.font.size);
             p5.textAlign(p5.LEFT, p5.CENTER);
-            const fontString = `${style[cardType].name.font.size}px Belwe`;
+            const fontString = `${style[cardType].name.font.size}px ${style[cardType].name.font.family}`;
+            console.log(fontString);
             drawName(inputs.name.value, fontString, style[cardType].name.font.outline, cardType, canvas);
 
             drawDescription(style[cardType].description);

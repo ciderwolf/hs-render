@@ -79,7 +79,7 @@ input {
 
 .text label {
     margin: 15px 0;
-    font-family: Belwe;
+    font-family: "Belwe Bd BT", sans-serif;
     font-size: 18pt;
 }
 
@@ -93,7 +93,7 @@ input {
 #reset-image {
     background-color: white;
     font-size: 12px;
-    font-family: 'Libre Franklin';
+    font-family: 'Libre Franklin', sans-serif;
     margin: 0 12px;
     color: #444;
     border: 1px solid #444;
@@ -111,7 +111,7 @@ input {
 #zoom-message {
     margin: 0px 5px;
     margin-top: 0.25em;
-    font-family: Belwe;
+    font-family: "Belwe Bd BT", sans-serif;
     width: max-content;
 }
 #zoom-percent {
@@ -133,12 +133,12 @@ input {
 }
 
 @font-face {
-    font-family: Belwe;
+    font-family: "Belwe Bd BT";
     src: url("/assets/fonts/Belwe-Bold.woff");
 }
 
 #p5_loading {
-    font-family: 'Belwe';
+    font-family: 'Belwe Bd BT', sans-serif;
 }
 
 #quill-container {
