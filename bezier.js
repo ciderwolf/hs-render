@@ -45,8 +45,7 @@ function fillRibbon(str, ribbon, ctx) {
         textCurve.push({ bezier: a, curve: c.curve });
     }
 
-    let letterPadding = ctx.measureText(" ").width / 4;
-    // let letterPadding = 0;
+    let letterPadding = ctx.measureText(" ").width / 8;
     let textLength = ribbonText.length;
     let pixelWidth = Math.round(ctx.measureText(ribbonText).width);
 

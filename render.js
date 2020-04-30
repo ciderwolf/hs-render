@@ -49,6 +49,7 @@ function preload() {
         italic: loadFont("assets/fonts/franklin-gothic-italic.ttf"),
         bolditalic: loadFont("assets/fonts/franklin-gothic-bolditalic.ttf"),
     }
+    fontMap["Belwe Bd BT"] = loadFont("assets/fonts/Belwe-Bold.woff");
 }
 
 function setup() {
@@ -110,14 +111,12 @@ function draw() {
         stroke(style[cardType].name.font.outline);
         textFont(fontMap[style[cardType].name.font.family]);
         strokeWeight(7);
-        // textSize(style[cardType].name.font.size);
-        textSize(48);
+        textSize(style[cardType].name.font.size);
         textAlign(LEFT, CENTER);
         drawName(inputs.name.value, cardType, canvas);
 
         drawDescription(style[cardType].description);
     }
-    drawing = false;
 }
 
 function drawCardImage(cardType) {
@@ -182,14 +181,17 @@ function drawAsset(img, name = 'default') {
         image(img.assets[name], img.x, img.y, img.width, img.height);
     }
 }
+
 function drawText(asset, txt) {
     fill(asset.font.color);
     textFont(fontMap[asset.font.family]);
-    textAlign(LEFT, TOP)
+    textAlign(CENTER, TOP);
     textSize(asset.font.size);
-    strokeWeight(10);
+    strokeWeight(asset.font.size > 100 ? 10 : 7);
     stroke(asset.font.outline);
-    text(txt, asset.text.x + (asset.text.width - textWidth(txt)) / 2, asset.text.y - 20);
+    const centerX = (asset.text.x * 2 + asset.text.width) / 2;
+    const centerY = (asset.text.y * 2 - asset.text.height) / 2 + 12;
+    text(txt, centerX, centerY);
 }
 
 function drawDescription(asset) {
