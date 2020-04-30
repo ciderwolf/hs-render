@@ -1,4 +1,8 @@
-const quill = new Quill('#effect', {
+import Quill from 'quill';
+import * as _ from 'p5/global';
+import { updateCardImage, ctx } from './render'
+
+export const quill = new Quill('#effect', {
     modules: {
         toolbar: [
             ['bold', 'italic']
@@ -9,8 +13,8 @@ const quill = new Quill('#effect', {
     formats: ['bold', 'italic']
 });
 
-function readFile() {
-    let fileSelector = document.getElementById("image-select");
+export function readFile() {
+    let fileSelector = document.getElementById("image-select") as HTMLInputElement;
     if (fileSelector.files.length == 0) {
         return false;
     }
@@ -19,9 +23,9 @@ function readFile() {
         return;
     }
     let reader = new FileReader();
-    reader.onload = function (f) {
-        let imgstring = f.target.result;
-        leeroy = loadImage(imgstring, redraw);
+    reader.onload = (f) => {
+        let imgstring = f.target.result as string;
+        ctx.loadImage(imgstring, updateCardImage);
     }
     reader.readAsDataURL(file);
     return true;
