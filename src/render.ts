@@ -3,8 +3,9 @@ import { Font, Image } from 'p5';
 import p5 from 'p5';
 import { readFile, quill } from './editor'
 import { drawName } from './bezier'
-import { TextBounds, Style, Asset, PortraitAsset, ImageData } from './style';
+import { Style, Asset, PortraitAsset, ImageData } from './style';
 import { loadStyle, pointInPolygon } from './util'
+import { splitText, Line } from './wrappedText';
 
 export let style: Style;
 let canvas: HTMLCanvasElement;
@@ -42,7 +43,7 @@ const cardInputs: { [id: string]: string[] } = {
 export const debug = false;
 let cardImage: Image;
 
-interface FontDetails {
+export interface FontDetails {
     normal: Font,
     bold: Font,
     italic: Font,
@@ -54,7 +55,7 @@ const fontMap: { [id: string]: Font | FontDetails } = {
     "Franklin Gothic FS": undefined
 };
 
-let p5funcs = (p5: p5) => {
+const p5funcs = (p5: p5) => {
 
     p5.preload = () => {
         loadStyle("assets/cards/styles/default/", (s: Style) => {
@@ -130,7 +131,6 @@ let p5funcs = (p5: p5) => {
             p5.textSize(style[cardType].name.font.size);
             p5.textAlign(p5.LEFT, p5.CENTER);
             const fontString = `${style[cardType].name.font.size}px ${style[cardType].name.font.family}`;
-            console.log(fontString);
             drawName(inputs.name.value, fontString, style[cardType].name.font.outline, cardType, canvas);
 
             drawDescription(style[cardType].description);
@@ -214,80 +214,29 @@ let p5funcs = (p5: p5) => {
         const textY = asset.text.y;
         const width = asset.text.width;
         const height = asset.text.height;
-
-        const formatGroups = quill.getContents().ops;
-        let lines = [];
-        let lineLength = 0;
-        let line = {
-            words: [] as TextBounds[],
-            width: 0
-        };
-        for (let j = 0; j < formatGroups.length; j++) {
-            let formatGroup = formatGroups[j];
-            let font = fonts.normal;
-
-            if (formatGroup.attributes) {
-                if (formatGroup.attributes.bold && formatGroup.attributes.italic) {
-                    font = fonts.bolditalic;
-                } else if (formatGroup.attributes.bold) {
-                    font = fonts.bold;
-                } else if (formatGroup.attributes.italic) {
-                    font = fonts.italic;
-                }
-            }
-            p5.textFont(font);
-            let text = formatGroup.insert.toString();
-            let textWords = text.split(/[\s]+/);
-            let nextGroup = formatGroups[j + 1];
-            let lastSpace = text.charAt(text.length - 1) == " " || (nextGroup && nextGroup.insert.toString().charAt(0) == " ");
-            for (let i = 0; i < textWords.length; i++) {
-                let textWord = textWords[i];
-                if (textWord == "") {
-                    continue;
-                }
-                let boundWord = textWord + (i == textWords.length - 1 && !lastSpace ? "" : " ");
-                let bounds = font.textBounds(boundWord, 0, 0, asset.font.size) as TextBounds;
-                bounds.h += p5.textDescent();
-                bounds.word = textWord;
-                bounds.font = font;
-                if (lineLength + bounds.w <= width) {
-                    lineLength += bounds.w;
-                    line.words.push(bounds);
-                    line.width += bounds.w;
-                } else {
-                    lines.push(line);
-                    lineLength = bounds.w;
-                    line = {
-                        words: [bounds],
-                        width: bounds.w
-                    };
-                }
-            }
-        }
-        lines.push(line);
+        const lines = splitText(quill, p5, fonts, width);
         const h = textHeight(lines);
-
         let lineX = textX;
         let y = textY + (height - h) / 2 + (h / lines.length) / 4;
-        for (let lineWords of lines) {
-            let x = lineX + (width - lineWords.width) / 2;
+        for (let line of lines) {
+            let x = lineX + (width - line.textWidth) / 2;
             let maxH = 0;
-            for (let bounds of lineWords.words) {
-                p5.textFont(bounds.font);
-                p5.text(bounds.word, x, y);
-                x += bounds.w;
-                maxH = Math.max(maxH, bounds.h);
+            for (let comp of line.components) {
+                p5.textFont(comp.font.font);
+                p5.text(comp.text, x, y);
+                x += comp.width;
+                maxH = Math.max(maxH, comp.height);
             }
             y += maxH;
         }
     }
 
-    function textHeight(lines: { words: TextBounds[] }[]) {
+    function textHeight(lines: Line[]) {
         let h = 0;
         for (let line of lines) {
             let lineHeight = 0;
-            for (let word of line.words) {
-                lineHeight = Math.max(word.h, lineHeight);
+            for (let word of line.components) {
+                lineHeight = Math.max(word.height, lineHeight);
             }
             h += lineHeight;
         }
